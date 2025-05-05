@@ -23,38 +23,21 @@ export const Footer: React.FC<Props> = ({
       </span>
 
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={classNames('filter__link', {
-            selected: statusValue === FilterStatus.All,
-          })}
-          data-cy="FilterLinkAll"
-          onClick={() => handleStatusValueChange(FilterStatus.All)}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={classNames('filter__link', {
-            selected: statusValue === FilterStatus.Active,
-          })}
-          data-cy="FilterLinkActive"
-          onClick={() => handleStatusValueChange(FilterStatus.Active)}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={classNames('filter__link', {
-            selected: statusValue === FilterStatus.Completed,
-          })}
-          data-cy="FilterLinkCompleted"
-          onClick={() => handleStatusValueChange(FilterStatus.Completed)}
-        >
-          Completed
-        </a>
+        {Object.values(FilterStatus).map(status => (
+          <a
+            key={status}
+            href={
+              status === FilterStatus.All ? `#/` : `#/${status.toLowerCase()}`
+            }
+            className={classNames('filter__link', {
+              selected: statusValue === status,
+            })}
+            data-cy={`FilterLink${status}`}
+            onClick={() => handleStatusValueChange(status)}
+          >
+            {status}
+          </a>
+        ))}
       </nav>
 
       <button
